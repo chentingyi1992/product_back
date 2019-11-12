@@ -1,0 +1,35 @@
+
+
+server:
+  port: 8010
+
+
+#????????????????
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+
+    url: jdbc:mysql://192.168.1.30:3306/product_qiyue
+
+
+
+    username: root
+    password: 213316
+  #????dubbo????????:???????????????
+
+
+mybatis:
+  #mybatisxml???????
+  mapper-locations: classpath:mapper/*.xml
+  #showsql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+java4all:
+  file:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    keyid: LTAI4FmusPBkLjEHn2WiG8tX
+    keysecret: d4VvUooFB7kMLYcfiZauxNA04Tpgpn
+    bucketname1: ctyfile
+    filehost: oss
+
