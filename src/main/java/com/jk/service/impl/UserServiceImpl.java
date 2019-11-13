@@ -118,14 +118,14 @@ public class UserServiceImpl implements UserService {
         //根据角色id查询对应的权限
         List<TreeBean> rolePower = userDao.queryPowerTreeByRoleid(roleid);
 
-        int pid = -1;
+        int pid = 0;
         //查询一级节点
         //提取公共方法的快捷键：alt+shift+m
         List<TreeBean> list = queryPowerNodes(pid,rolePower);
 
         //添加虚拟的根节点
         TreeBean tree = new TreeBean();
-        tree.setId(-1);
+        tree.setId(0);
         tree.setPid(-2);
         tree.setText("根节点");
         tree.setChildren(list);
@@ -176,6 +176,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUSers(ArrayList<UserBean> list) {
         userDao.addUSers(list);
+    }
+
+    @Override
+    public List<UserBean> queryTable() {
+        return userDao.queryTable();
+    }
+
+    @Override
+    public void detelePower(Integer id) {
+        userDao.detelePower(id);
+    }
+
+    @Override
+    public void saveUser(UserBean userBean) {
+        userDao.saveUser(userBean);
+    }
+
+    @Override
+    public void saveRoles(RoleBean roleBean) {
+        userDao.saveRoles(roleBean);
+    }
+
+    @Override
+    public void deteleById(Integer id) {
+        userDao.deteleById(id);
     }
 
 }

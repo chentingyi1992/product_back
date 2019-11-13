@@ -29,6 +29,11 @@ public class PageController {
         return "cty/rolepower";
     }
 
+    @RequestMapping("toyonghu")
+    public String toyonghu(){
+        return "cty/toyonghu";
+    }
+
     @RequestMapping("userlist")
     @RequiresPermissions("page:userlist")
     public String userlist(){

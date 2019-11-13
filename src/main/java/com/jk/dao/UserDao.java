@@ -4,8 +4,7 @@ import com.jk.model.RoleBean;
 import com.jk.model.TreeBean;
 import com.jk.model.UserBean;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -230,4 +229,17 @@ public interface UserDao {
     List<UserBean> findUser();
 
     void addUSers(ArrayList<UserBean> list);
+
+    @Select("select * from tt_user")
+    List<UserBean> queryTable();
+
+    @Delete("delete  from tt_user  where userId =#{value}")
+    void detelePower(Integer id);
+
+    @Insert("INSERT INTO tt_user(userName,userPwd) values(#{userName},#{userPwd})")
+    void saveUser(UserBean userBean);
+    @Insert("INSERT INTO t_role(rolesName,rolesInfo) values(#{rolesName},#{rolesInfo})")
+    void saveRoles(RoleBean roleBean);
+    @Delete("delete  from t_role  where rolesId =#{value}")
+    void deteleById(Integer id);
 }

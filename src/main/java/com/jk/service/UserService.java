@@ -119,4 +119,14 @@ public interface UserService {
     List<UserBean> findUser();
 
     void addUSers(ArrayList<UserBean> list);
+
+    List<UserBean> queryTable();
+
+    void detelePower(Integer id);
+
+    void saveUser(UserBean userBean);
+
+    void saveRoles(RoleBean roleBean);
+
+    void deteleById(Integer id);
 }
