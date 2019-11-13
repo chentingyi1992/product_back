@@ -34,4 +34,13 @@ public class PageController {
     public String userlist(){
         return "cty/userlist";
     }
+
+    /**
+     * ydd房源审核   tohous
+     * @return
+     */
+    @RequestMapping("tohous")
+    public String tohous(){
+        return "ydd/hous";
+    }
 }
