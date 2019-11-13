@@ -1,13 +1,18 @@
 package com.jk.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * author:yangdd
  * create time:2019/11/12
  * email:2048114149@qq.com
  * tel:
  */
+@Document(collection = "t_housing")
 public class HousBean {
 
+    @Id
     private Integer id;
 
     private String homeid;
@@ -20,25 +25,25 @@ public class HousBean {
 
     private String community;
 
-    private String money;
+    private Integer money;
 
     private String info;
 
     private String type;
 
-    private Double size;
+    private Integer size;
 
-    private String floor;
+    private Integer floor;
 
     private String orientation;
 
-    private String host;
+    private Integer host;
 
     private String train;
 
     private String photo;
 
-    private String status;
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -88,11 +93,11 @@ public class HousBean {
         this.community = community;
     }
 
-    public String getMoney() {
+    public Integer getMoney() {
         return money;
     }
 
-    public void setMoney(String money) {
+    public void setMoney(Integer money) {
         this.money = money;
     }
 
@@ -112,19 +117,19 @@ public class HousBean {
         this.type = type;
     }
 
-    public Double getSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(Double size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
-    public String getFloor() {
+    public Integer getFloor() {
         return floor;
     }
 
-    public void setFloor(String floor) {
+    public void setFloor(Integer floor) {
         this.floor = floor;
     }
 
@@ -136,11 +141,11 @@ public class HousBean {
         this.orientation = orientation;
     }
 
-    public String getHost() {
+    public Integer getHost() {
         return host;
     }
 
-    public void setHost(String host) {
+    public void setHost(Integer host) {
         this.host = host;
     }
 
@@ -160,11 +165,11 @@ public class HousBean {
         this.photo = photo;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }
