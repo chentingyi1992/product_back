@@ -103,8 +103,16 @@
 	</update>
 	<!-- 根据角色id查询对应的权限 -->
 	<select id="queryPowerTreeByRoleid" parameterType="int" resultType="com.jk.model.TreeBean">
-		select n.id,n.text,n.url,n.pid from t_power n left join t_role_power rp on n.id = rp.powerid
-			where rp.roleid=#{roleid}		
+		SELECT
+	n.id,
+	n.text,
+	n.url,
+	n.pid
+FROM
+	t_power n
+LEFT JOIN t_role_power rp ON n.id = rp.powerId
+WHERE
+	rp.rolesId = #{value}
 	</select>
 	<!-- 根据角色id删除角色权限中间表的数据 -->
 	<delete id="deleteByRoleid" parameterType="int">
