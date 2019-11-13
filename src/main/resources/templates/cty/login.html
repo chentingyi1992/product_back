@@ -56,7 +56,7 @@
         $("#loginForm").form("submit",{
             url:"../book/login",
             success:function(data){
-            debugger
+
                 $.messager.alert("提示",data,"info");
                 if(data=="登录成功"){
                     location.href="../page/main";

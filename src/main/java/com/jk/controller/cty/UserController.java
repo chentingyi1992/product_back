@@ -317,4 +317,36 @@ public class UserController {
     public List<TreeBean> queryPowerTree(Integer roleid){
         return userService.queryPowerTree(roleid);
     }
+
+
+    @RequestMapping("queryTable")
+    @ResponseBody
+    public List<UserBean> queryTable(){
+        return userService.queryTable();
+    }
+
+    @RequestMapping("detelePower")
+    @ResponseBody
+    public void detelePower(Integer id){
+     userService.detelePower(id);
+    }
+
+
+    @RequestMapping("saveUser")
+    @ResponseBody
+    public void saveUser(UserBean userBean){
+        userService.saveUser(userBean);
+    }
+
+    @RequestMapping("saveRoles")
+    @ResponseBody
+    public void saveRoles(RoleBean roleBean){
+        userService.saveRoles(roleBean);
+    }
+
+    @RequestMapping("deteleById")
+    @ResponseBody
+    public void deteleById(Integer id){
+        userService.deteleById(id);
+    }
 }
