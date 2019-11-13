@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 引入easyui的css样式 -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/themes/default/easyui.css">
+    <!-- 引入easyui的图标css样式 -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/themes/icon.css">
+    <!-- 引入jqury的js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.min.js"></script>
+    <!-- 引入easyui的js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.easyui.min.js"></script>
+    <!-- 引入easyui的中文js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<!--新增按钮-->
+<div id="tools">
+    <a href="javascript:openAdd()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+</div>
+<!-- 新增用户-->
+<div id="poewrDialog" class="easyui-dialog" data-options="title:'新增权限',closed:true,width:300,height:200,modal:true,buttons:'#buttons'">
+    用户名称：<input class="easyui-textbox" id="userName"><br>
+    用户密码:<input class="easyui-textbox" id="userPwd"><br>
+
+</div>
+<div id="buttons">
+    <a href="javascript:savePower()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+    <a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">取消</a>
+</div>
+<!--用户表格-->
+<table id="yonghuTable"></table>
+</body>
+  <script type="text/javascript">
+$(function(){
+    queryTable();
+
+})
+      //初始化权限树的数据
+      function queryTable(){
+          $("#yonghuTable").datagrid({
+              url:"../user/queryTable",
+              columns:[
+                  [{field:"checkbox",checkbox:true},
+                      {field:"userId",title:"用户ID"},
+                      {field:"userName",title:"用户名称"},
+                      {field:"userPwd",title:"用户密码"},
+                      {field:"tool",title:"操作",formatter:function(value,row,index){
+                              var str = "<a href='javascript:detelePower("+row.userId+")'>删除</a>";
+                              return str;
+                          }}
+                  ]
+              ],
+              fit:true,
+              toolbar:"#tools"
+          })
+      }
+detelePower=function(id){
+
+    $.messager.confirm('提示框', '你确定要删除吗?',function(r){
+
+        if (r){
+
+            $.ajax({
+                url:"../user/detelePower",
+                type:"post",
+                data:{id:id},
+                success:function(){
+                    //重新加载树
+                    $("#yonghuTable").datagrid("reload")
+                    $.messager.alert("提示","删除成功!","info");
+                }
+            })
+        }
+
+    })
+
+}
+openAdd=function(){
+$("#poewrDialog").dialog("open")
+
+}
+//关闭新增权限弹框
+function closeDialog(){
+    $("#poewrDialog").dialog("close");
+}
+savePower=function(){
+
+    var userName = $("#userName").textbox("getValue");
+    var userPwd = $("#userPwd").textbox("getValue");
+    $.ajax({
+        url:"../user/saveUser",
+        type:"post",
+        data:{userName:userName,userPwd:userPwd},
+        success:function(){
+            //关闭弹框
+            closeDialog();
+            //重新加载树
+            $("#yonghuTable").datagrid("reload")
+        }
+    })
+
+}
+  </script>
+</html>

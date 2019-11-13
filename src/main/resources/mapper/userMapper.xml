@@ -116,11 +116,11 @@ WHERE
 	</select>
 	<!-- 根据角色id删除角色权限中间表的数据 -->
 	<delete id="deleteByRoleid" parameterType="int">
-		delete from t_role_power where roleid=#{roleid}
+		delete from t_role_power where rolesId=#{value}
 	</delete>
 	<!-- 批量新增角色权限中间表 -->
 	<insert id="addRolePower" >
-		insert into t_role_power(roleid,powerid) values 
+		insert into t_role_power(rolesId,powerId) values
 		<foreach collection="ids" item="powerid" separator=",">
 			(#{roleid},#{powerid})
 		</foreach>
@@ -132,9 +132,9 @@ WHERE
 	<!-- 根据用户id查询拥有的权限 -->
 	<select id="queryPowerByUserid" parameterType="int" resultType="string">		
 		select t.permission from t_power t
-			left join t_role_power rp on t.id = rp.powerid
-			left join t_user_role  ur on rp.roleid = ur.roleid
-			where  ur.userid = #{userid} and t.permission is not null and t.permission!=''
+			left join t_role_power rp on t.id = rp.powerId
+			left join t_user_role  ur on rp.rolesId = ur.rolesId
+			where  ur.userId = #{userId} and t.permission is not null and t.permission!=''
 			group by t.id
 	</select>
 </mapper>

@@ -29,23 +29,29 @@ public class PageController {
         return "cty/rolepower";
     }
 
+
     @RequestMapping("fangyuan")
     public String fangyuan(){
         return "cty/fangyuan";
-    }
 
-    @RequestMapping("userlist")
-    @RequiresPermissions("page:userlist")
-    public String userlist(){
-        return "cty/userlist";
-    }
+        @RequestMapping("toyonghu")
+        public String toyonghu(){
+            return "cty/toyonghu";
 
-    /**
-     * ydd房源审核   tohous
-     * @return
-     */
-    @RequestMapping("tohous")
-    public String tohous(){
-        return "ydd/hous";
+        }
+
+        @RequestMapping("userlist")
+        @RequiresPermissions("page:userlist")
+        public String userlist(){
+            return "cty/userlist";
+        }
+
+        /**
+         * ydd房源审核   tohous
+         * @return
+         */
+        @RequestMapping("tohous")
+        public String tohous(){
+            return "ydd/hous";
+        }
     }
-}
