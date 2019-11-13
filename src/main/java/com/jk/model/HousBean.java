@@ -15,7 +15,7 @@ public class HousBean {
     @Id
     private Integer id;
 
-    private String homeid;
+    private String homeId;
 
     private String title;
 
@@ -37,13 +37,15 @@ public class HousBean {
 
     private String orientation;
 
-    private Integer host;
+    private String host;
 
     private String train;
 
     private String photo;
 
     private Integer status;
+
+
 
     public Integer getId() {
         return id;
@@ -53,12 +55,12 @@ public class HousBean {
         this.id = id;
     }
 
-    public String getHomeid() {
-        return homeid;
+    public String getHomeId() {
+        return homeId;
     }
 
-    public void setHomeid(String homeid) {
-        this.homeid = homeid;
+    public void setHomeId(String homeId) {
+        this.homeId = homeId;
     }
 
     public String getTitle() {
@@ -141,11 +143,11 @@ public class HousBean {
         this.orientation = orientation;
     }
 
-    public Integer getHost() {
+    public String getHost() {
         return host;
     }
 
-    public void setHost(Integer host) {
+    public void setHost(String host) {
         this.host = host;
     }
 

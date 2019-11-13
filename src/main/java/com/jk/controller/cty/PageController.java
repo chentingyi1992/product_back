@@ -29,6 +29,11 @@ public class PageController {
         return "cty/rolepower";
     }
 
+    @RequestMapping("fangyuan")
+    public String fangyuan(){
+        return "cty/fangyuan";
+    }
+
     @RequestMapping("userlist")
     @RequiresPermissions("page:userlist")
     public String userlist(){
