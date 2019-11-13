@@ -1,6 +1,5 @@
 package com.jk.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -12,10 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "t_housing")
 public class HousBean {
 
-    @Id
     private Integer id;
 
-    private String homeid;
+    private String homeId;
 
     private String title;
 
@@ -53,12 +51,12 @@ public class HousBean {
         this.id = id;
     }
 
-    public String getHomeid() {
-        return homeid;
+    public String getHomeId() {
+        return homeId;
     }
 
-    public void setHomeid(String homeid) {
-        this.homeid = homeid;
+    public void setHomeId(String homeId) {
+        this.homeId = homeId;
     }
 
     public String getTitle() {

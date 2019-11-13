@@ -19,4 +19,7 @@ public interface YddHousService {
      * @return
      */
     Map<String, Object> yddHousList(Integer page, Integer rows, HousBean hous);
+
+    void shenhe(String id);
+
 }

@@ -133,7 +133,7 @@ WHERE
 	<select id="queryPowerByUserid" parameterType="int" resultType="string">		
 		select t.permission from t_power t
 			left join t_role_power rp on t.id = rp.powerid
-			left join t_user_role  ur on rp.roleid = ur.roleid
+			left join t_user_role  ur on rp.rolesId = ur.rolesId
 			where  ur.userid = #{userid} and t.permission is not null and t.permission!=''
 			group by t.id
 	</select>

@@ -2,12 +2,14 @@ package com.jk.controller.cty;
 
 import com.jk.model.HousBean;
 import com.jk.service.YddHousService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,9 +34,18 @@ public class YddHousController {
      */
     @RequestMapping("yddHousList")
     @ResponseBody
-    @RequiresPermissions("ydd:yddHousList")
-    public Map<String , Object> yddHousList(Integer page , Integer rows , HousBean hous){
+    public Map<String , Object> yddHousList(Integer page, Integer rows, HousBean hous){
+
         return yddHousService.yddHousList(page,rows,hous);
     }
+
+    @RequestMapping("shenhe")
+    @ResponseBody
+    public void shenhe(String id){
+        yddHousService.shenhe(id);
+    }
+
+
+
 
 }
