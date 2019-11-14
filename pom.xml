@@ -20,6 +20,15 @@
 
     <dependencies>
 
+        <!-- 1.新建springboot项目，引入redis依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
         <!--引入poi-->
         <dependency>
             <groupId>org.apache.poi</groupId>
