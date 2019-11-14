@@ -106,7 +106,6 @@ public interface UserDao {
      * 修改时间：2019年9月3日 下午5:07:15
      * 修改备注：
      * @param arrId
-     * @param id</pre>
      */
     void addUserRole(@Param("arrId") String[] arrId, @Param("userid") Integer userid);
 
