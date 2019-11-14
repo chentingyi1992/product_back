@@ -350,8 +350,8 @@ public class UserController {
 
     @RequestMapping("queryXiaoQu")
     @ResponseBody
-    public HashMap<String, Object> queryXiaoQu(Integer page, Integer rows){
-       return userService.XiaoQuTable(page,rows);
+    public HashMap<String, Object> queryXiaoQu(Integer page, Integer rows,Integer max){
+       return userService.XiaoQuTable(page,rows,max);
     }
 
 
@@ -366,5 +366,12 @@ public class UserController {
     public void saveComm(CommBean commBean){
         commBean.setStastu(2);
         userService.saveComm(commBean);
+    }
+
+    @RequestMapping("updateById")
+    @ResponseBody
+    public void updateById(Integer id){
+
+        userService.updateById(id);
     }
 }

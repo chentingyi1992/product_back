@@ -59,4 +59,8 @@ public class PageController {
     public String toXiaoQu(){
         return "cty/toXiaoQu";
     }
+    @RequestMapping("toShenHe")
+    public String toShenHe(){
+        return "cty/toShenHe";
+    }
     }

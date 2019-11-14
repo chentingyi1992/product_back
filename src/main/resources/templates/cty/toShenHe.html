@@ -19,24 +19,7 @@
 
 <body>
 
-<div id="tools">
 
-    <a href="javascript:openAdd()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增小区</a>
-</div>
-<!-- 新增员工-->
-<div id="saveYuangong" class="easyui-dialog" data-options="title:'新增小区',closed:true,width:300,height:200,modal:true,buttons:'#buttonss'">
-    小区名称：<input class="easyui-textbox" id="commName"><br>
-    小区地址:<input class="easyui-textbox" id="townCommName"><br>
-    小区污染：<input class="easyui-textbox" id="huanjing"><br>
-    附近学校:<input class="easyui-textbox" id="fujin"><br>
-    附近健身场所：<input class="easyui-textbox" id="sheshi"><br>
-
-</div>
-<!-- 定义对话框的按钮 -->
-<div id="buttonss">
-    <a href="javascript:savComm()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
-    <a href="javascript:closeDialogss()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">取消</a>
-</div>
 <table id="commTable"></table>
 </body>
 <script type="text/javascript">
@@ -48,7 +31,7 @@
     //初始化权限树的数据
     function queryTable(){
         $("#commTable").datagrid({
-            url:"../user/queryXiaoQu?max=1",
+            url:"../user/queryXiaoQu?max=2",
             columns:[
                 [{field:"checkbox",checkbox:true},
 
@@ -58,15 +41,13 @@
                     {field:"fujin",title:"附近学校"},
                     {field:"sheshi",title:"锻炼场所"},
                     {field:"stastu",title:"审核状态",formatter:function(value,row,index){
-                           if(value==1){
-                               return "审核成功";
-                           }
+
                             if(value==2){
-                                return "审核失败";
+                                return "待审核";
                             }
                         }},
                     {field:"tool",title:"操作",formatter:function(value,row,index){
-                            var str = "<a href='javascript:deteleById("+row.commId+")'>删除</a>";
+                            var str = "<a href='javascript:updateById("+row.commId+")'>审核</a>";
                             return str;
                         }}
                 ]
@@ -79,46 +60,19 @@
             toolbar:"#tools"
         })
     }
-    deteleById =function(id){
-        $.messager.confirm('确认对话框', '你确定删除吗？', function(r){
-            if (r){
+    updateById =function(id){
+alert(111)
                 $.ajax({
-                    url:"../user/deteleByIds",
+                    url:"../user/updateById",
                     data:{id:id},
                     success:function(){
                         $("#commTable").datagrid("reload")
                     }
                 })
             }
-        });
-
-    }
-    openAdd=function(){
-        $("#saveYuangong").dialog("open")
-
-    }
-
-    closeDialogss=function(){
-        $("#saveYuangong").dialog("close")
-
-    }
-    savComm=function(){
-
-        var commName = $("#commName").textbox("getValue");
-        var townCommName = $("#townCommName").textbox("getValue");
 
 
-        $.ajax({
-            url:"../user/saveComm",
-            type:"post",
-            data:{commName:commName,townCommName:townCommName},
-            success:function(){
-                //关闭弹框
-                closeDialogss();
-                //重新加载树
-                $('#commTable').tree("reload");
-            }
-        })
-    }
+
+
 </script>
 </html>
