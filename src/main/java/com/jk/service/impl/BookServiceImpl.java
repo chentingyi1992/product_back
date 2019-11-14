@@ -172,7 +172,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public HousBean queryImgById(Integer id) {
+    public HousBean queryImgById(String id) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         return mogoTemplate.findOne(query,HousBean.class);

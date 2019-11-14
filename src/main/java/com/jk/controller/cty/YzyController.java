@@ -90,9 +90,14 @@ public class YzyController {
 
     @RequestMapping("queryImgById")
     @ResponseBody
-    public HousBean queryImgById(Integer id){
+    public HousBean queryImgById(String id){
         HousBean housBean = bookService.queryImgById(id);
         return housBean;
+    }
+
+    public static void main(String[] args) {
+        String a = "\u4f18\u79c0";
+        System.out.println(a);
     }
 
 }
