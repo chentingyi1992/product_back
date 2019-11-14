@@ -51,14 +51,14 @@ public class YzyController {
 
     @RequestMapping("queryTown")
     @ResponseBody
-    public List<TownBean> queryTown(Integer id){
-        return bookService.queryTown(id);
+    public List<TownBean> queryTown(String name){
+        return bookService.queryTown(name);
     }
 
     @RequestMapping("queryComm")
     @ResponseBody
-    public List<CommBean> queryComm(Integer id){
-        return bookService.queryComm(id);
+    public List<CommBean> queryComm(String townName){
+        return bookService.queryComm(townName);
     }
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());

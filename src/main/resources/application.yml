@@ -1,3 +1,5 @@
+
+
 server:
   port: 8010
 
@@ -7,10 +9,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
 
-    url: jdbc:mysql://192.168.1.3:3306/product_qiyue
-    username: root
-    password: 213316
-
+    url: jdbc:mysql://192.168.1.30:3306/product_qiyue
   redis:
     database: 0
     jedis:
@@ -22,13 +21,12 @@ spring:
     timeout: 10000
     cluster:
       nodes: 192.168.252.128:7000,192.168.252.128:7001,192.168.252.128:7002,192.168.252.128:7003,192.168.252.128:7004,192.168.252.128:7005
-
-
   data:
     mongodb:
-      uri: mongodb://192.168.1.3:27017/product_qiyue
+      uri: mongodb://192.168.1.30:27017/product_qiyue
 
-
+    username: root
+    password: 213316
   #????dubbo????????:???????????????
 
 
@@ -42,7 +40,8 @@ mybatis:
 java4all:
   file:
     endpoint: oss-cn-beijing.aliyuncs.com
-    keyid: LTAI4Fk1RSuTxvoixXsFnaj4
-    keysecret: e53NCciGE2JKwIeC2JqzDamEKGGzrv
-    bucketname1: cold
-    filehost: img
+    keyid: LTAI4FmusPBkLjEHn2WiG8tX
+    keysecret: d4VvUooFB7kMLYcfiZauxNA04Tpgpn
+    bucketname1: ctyfile
+    filehost: oss
+

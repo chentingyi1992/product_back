@@ -26,6 +26,4 @@ public interface BookService {
     List<TownBean> queryTown(Integer id);
 
     List<CommBean> queryComm(Integer id);
-
-    HousBean queryImgById(Integer id);
 }

@@ -1,7 +1,10 @@
 package com.jk.dao;
 
 
-import com.jk.model.*;
+import com.jk.model.AreaBean;
+import com.jk.model.CommBean;
+import com.jk.model.TownBean;
+import com.jk.model.UserBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -31,6 +34,4 @@ public interface BookDao {
 
     @Select("select * from t_community t where t.townId = #{id}")
     List<CommBean> queryComm(Integer id);
-
-
 }
