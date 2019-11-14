@@ -54,9 +54,4 @@ public class PageController {
         public String tohous(){
             return "ydd/hous";
         }
-
-    @RequestMapping("toXiaoQu")
-    public String toXiaoQu(){
-        return "cty/toXiaoQu";
-    }
     }

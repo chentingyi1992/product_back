@@ -1,6 +1,10 @@
 package com.jk.model;
 
+
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+
 
 /**
  * author:yangdd
@@ -11,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "t_housing")
 public class HousBean {
 
-    private Integer id;
+    private String id;
 
     private String homeId;
 
@@ -44,12 +48,33 @@ public class HousBean {
     private Integer status;
 
 
+    @Transient
+    private Integer maxmoney;
 
-    public Integer getId() {
+    @Transient
+    private Integer minmoney;
+
+    public Integer getMaxmoney() {
+        return maxmoney;
+    }
+
+    public void setMaxmoney(Integer maxmoney) {
+        this.maxmoney = maxmoney;
+    }
+
+    public Integer getMinmoney() {
+        return minmoney;
+    }
+
+    public void setMinmoney(Integer minmoney) {
+        this.minmoney = minmoney;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
