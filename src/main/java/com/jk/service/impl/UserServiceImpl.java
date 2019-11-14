@@ -2,6 +2,7 @@ package com.jk.service.impl;
 
 
 import com.jk.dao.UserDao;
+import com.jk.model.CommBean;
 import com.jk.model.RoleBean;
 import com.jk.model.TreeBean;
 import com.jk.model.UserBean;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author：wdd
@@ -201,6 +203,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deteleById(Integer id) {
         userDao.deteleById(id);
+    }
+
+    @Override
+    public HashMap<String, Object> XiaoQuTable(Integer page, Integer rows) {
+        //查询总条数
+        int total = userDao.queryCounts();
+        int start = (page-1)*rows;
+        //查询每页返回的数据 list
+        List<CommBean> list = userDao.queryUserPages(start,rows);
+
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("total", total);
+        map.put("rows", list);
+        return map;
+    }
+
+    @Override
+    public void deteleByIds(Integer id) {
+        userDao.deteleByIds(id);
+
+    }
+
+    @Override
+    public void saveComm(CommBean commBean) {
+        userDao.saveComm(commBean);
     }
 
 }
