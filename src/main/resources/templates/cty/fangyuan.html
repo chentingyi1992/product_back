@@ -13,6 +13,14 @@
     <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.easyui.min.js"></script>
     <!-- 引入easyui的中文js文件 -->
     <script type="text/javascript" src="../js/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
+    <!-- BootStrap 必备-->
+    <script src="../js/jquery-easyui-1.5/js/bootstrap3/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/js/bootstrap3/css/bootstrap.css">
+    <!-- 引入文件上传fileinput的css、js -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/js/bootstrap-fileinput/css/fileinput.css">
+    <script src="../js/jquery-easyui-1.5/js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/jquery-easyui-1.5/js/bootstrap-fileinput/js/locales/zh.js"></script>
+
 </head>
 <body>
 <div id="tools">
@@ -107,16 +115,62 @@
                 <td>房源状态</td>
                 <td><input class="easyui-textbox" name="status"></td>
             </tr>
+            <tr>
+                <td>房源图片</td>
+                <td>
+                    <input type="hidden" id="testimg" name="img" />
+                    <input type="file" multiple class="projectfile" accept="image/*" name="file" id="fileimg">
+                </td>
+            </tr>
         </table>
     </form>
 </div>
+<div id="imgDialog" class="easyui-dialog" data-options="closed:true,width:800,height:600,modal:true,buttons:'#buttons1'">
+    <div style="width:350px;height:400px;float:left;background-color:black">
 
+    </div>
+    <div style="width:350px;height:400px;float:right;background-color:blue">
+
+    </div>
+</div>
 <div id="buttons">
     <a href="javascript:saveUser()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
     <a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">取消</a>
 </div>
 </body>
 <script>
+
+    $(function () {
+        initFile();
+    })
+
+    function initFile(){
+        $("#fileimg").fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: '../yzy/uploadimg', //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileCount: 6, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount:true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        }).on('fileuploaded', function(event, data, previewId, index) {
+           // $('#testimg').val(data.response);
+            //alert($('#testimg').val())
+            var imgval = $('#testimg').val();
+           // var imgval = "";
+            if(imgval == null || imgval == "" || imgval == undefined){
+            imgval = data.response;
+            }else{
+            	imgval += ","+data.response;
+            }
+            //alert(imgval)
+            $('#testimg').val(imgval);
+        });
+    }
 
     //新增
     function saveUser(){
@@ -138,6 +192,25 @@
             title:'新增房源'
         });
         initFormDeptSelect();
+    }
+
+    //打开图片弹框
+    function openImg(id){
+        $.ajax({
+            url:"../yzy/queryImgById",
+            type:"post",
+            data:{id:id},
+            success:function(data){
+                var img = data.img;
+                var arr = img.split(",");
+                alert(arr[0])
+            }
+        })
+
+        $("#imgDialog").dialog({
+            closed:false,
+            title:'房源详情'
+        });
     }
 
 
@@ -182,6 +255,7 @@
         initHousTable();//初始化用户表格
     })
 
+
     function initHousTable(){
         $("#housTable").datagrid({
             url:"../yzy/yddHousList",
@@ -211,6 +285,9 @@
                                 return "审核未通过";
                             }
                         }},
+                    {field:"tupian",title:"查看",formatter:function (value,row,index) {
+                            return "<a href='javascript:openImg("+row.id+")'>房源图片</a>";
+                        }}
                 ]
             ],
             pagination:true,

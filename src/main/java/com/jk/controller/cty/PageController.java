@@ -15,43 +15,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 
     @RequestMapping("toLogin")
-    public String toLogin(){
+    public String toLogin() {
         return "cty/login";
     }
 
     @RequestMapping("main")
-    public String main(){
+    public String main() {
         return "cty/main";
     }
 
     @RequestMapping("rolepower")
-    public String rolepower(){
+    public String rolepower() {
         return "cty/rolepower";
     }
 
 
     @RequestMapping("fangyuan")
-    public String fangyuan(){
+    public String fangyuan() {
         return "cty/fangyuan";
-
-        @RequestMapping("toyonghu")
-        public String toyonghu(){
-            return "cty/toyonghu";
-
-        }
-
-        @RequestMapping("userlist")
-        @RequiresPermissions("page:userlist")
-        public String userlist(){
-            return "cty/userlist";
-        }
-
-        /**
-         * ydd房源审核   tohous
-         * @return
-         */
-        @RequestMapping("tohous")
-        public String tohous(){
-            return "ydd/hous";
-        }
     }
+
+    @RequestMapping("toyonghu")
+    public String toyonghu() {
+        return "cty/toyonghu";
+
+    }
+
+    @RequestMapping("userlist")
+    @RequiresPermissions("page:userlist")
+    public String userlist() {
+        return "cty/userlist";
+    }
+
+    /**
+     * ydd房源审核   tohous
+     *
+     * @return
+     */
+    @RequestMapping("tohous")
+    public String tohous() {
+        return "ydd/hous";
+    }
+}

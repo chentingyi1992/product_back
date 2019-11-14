@@ -33,8 +33,8 @@ mybatis:
 java4all:
   file:
     endpoint: oss-cn-beijing.aliyuncs.com
-    keyid: LTAI4FmusPBkLjEHn2WiG8tX
-    keysecret: d4VvUooFB7kMLYcfiZauxNA04Tpgpn
-    bucketname1: ctyfile
-    filehost: oss
+    keyid: LTAI4Fk1RSuTxvoixXsFnaj4
+    keysecret: e53NCciGE2JKwIeC2JqzDamEKGGzrv
+    bucketname1: cold
+    filehost: img
 
