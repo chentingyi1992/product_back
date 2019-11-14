@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入easyui的css样式 -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/themes/default/easyui.css">
+    <!-- 引入easyui的图标css样式 -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/themes/icon.css">
+    <!-- 引入jqury的js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.min.js"></script>
+    <!-- 引入easyui的js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.easyui.min.js"></script>
+    <!-- 引入easyui的中文js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<div id="tools">
+    <table>
+        <tr>
+            <td>房源:</td>
+            <td> <input type="text" class="easyui-textbox" id="title"> </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+              <a onclick="searchLog()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+              <a href="javascript:openAdd()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+            </td>
+        </tr>
+        <tr>
+    </table>
+</div>
+
+<div id="housTable"></div>
+
+<div id="userDialog" class="easyui-dialog" data-options="closed:true,width:500,height:400,modal:true,buttons:'#buttons'">
+    <form id="userForm" method="post">
+        <table>
+            <tr>
+                <td>id</td>
+                <td><input class="easyui-textbox" name="id"></td>
+            </tr>
+            <tr>
+                <td>房源编号</td>
+                <td><input class="easyui-textbox" name="homeId"></td>
+            </tr>
+            <tr>
+                <td>房源标题</td>
+                <td><input class="easyui-textbox" name="title"></td>
+            </tr>
+            <tr>
+                <td>区</td>
+                <td>
+                    <input id="area" name="area" class="easyui-combobox">
+                </td>
+            </tr>
+
+            <tr>
+                <td>街道</td>
+                <td>
+                    <input id="region" name="region" class="easyui-combobox">
+                </td>
+            </tr>
+            <tr>
+                <td>小区</td>
+                <td>
+                    <input id="community" name="community" class="easyui-combobox">
+                </td>
+            </tr>
+            <tr>
+                <td>房源价格</td>
+                <td><input class="easyui-textbox" name="money"></td>
+            </tr>
+            <tr>
+                <td>周边环境</td>
+                <td><input class="easyui-textbox" name="info"></td>
+            </tr>
+            <tr>
+                <td>房源类型</td>
+                <td><input class="easyui-textbox" name="type"></td>
+            </tr>
+            <tr>
+                <td>房源面积</td>
+                <td><input class="easyui-textbox" name="size"></td>
+            </tr>
+            <tr>
+                <td>房源楼层</td>
+                <td><input class="easyui-textbox" name="floor"></td>
+            </tr>
+            <tr>
+                <td>房源方向</td>
+                <td><input class="easyui-textbox" name="orientation"></td>
+            </tr>
+            <tr>
+                <td>房东</td>
+                <td><input class="easyui-textbox" name="host"></td>
+            </tr>
+            <tr>
+                <td>附近地铁</td>
+                <td><input class="easyui-textbox" name="train"></td>
+            </tr>
+            <tr>
+                <td>房东电话</td>
+                <td><input class="easyui-textbox" name="photo"></td>
+            </tr>
+            <tr>
+                <td>房源状态</td>
+                <td><input class="easyui-textbox" name="status"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="buttons">
+    <a href="javascript:saveUser()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+    <a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">取消</a>
+</div>
+</body>
+<script>
+
+    //新增
+    function saveUser(){
+        $("#userForm").form("submit",{
+            url:"../yzy/addHous",
+            success:function(){
+                //关闭弹框
+                closeDialog();
+                //刷新表格
+                initHousTable();
+            }
+        });
+    }
+
+    //打开新增弹框
+    function openAdd(){
+        $("#userDialog").dialog({
+            closed:false,
+            title:'新增房源'
+        });
+        initFormDeptSelect();
+    }
+
+
+    function initFormDeptSelect(){
+        $("#area").combobox({
+            url:"../yzy/findDeptList",
+            valueField:"id",
+            textField:"name",
+            onChange:function(newValue,oldValue){
+                $("#region").combobox({
+                    url:"../yzy/queryTown?id="+newValue,
+                    valueField:"townId",
+                    textField:"townName",
+                    onChange:function(newValue,oldValue){
+                        $("#community").combobox({
+                            url:"../yzy/queryComm?id="+newValue,
+                            valueField:"commId",
+                            textField:"commName",
+                        })
+                    }
+                })
+            }
+        })
+
+    }
+
+    //关闭弹框
+    function closeDialog(){
+        $("#userDialog").dialog("close");
+    }
+
+   //条件查询
+    function searchLog(){
+        var title = $("#title").textbox("getValue");
+        $("#housTable").datagrid("load",{
+            title:title,
+        })
+    }
+
+    //查询
+    $(function(){
+        initHousTable();//初始化用户表格
+    })
+
+    function initHousTable(){
+        $("#housTable").datagrid({
+            url:"../yzy/yddHousList",
+            columns:[
+                [{field:"checkbox",checkbox:true},
+                    {field:"id",title:"房源id"},
+                    {field:"homeId",title:"房源编号"},
+                    {field:"title",title:"房源标题"},
+                    {field:'xx',formatter:function(value,row,index){
+                            return row.area+"-"+row.region+"-"+row.community+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        },title:'地址',width:400},
+                    {field:"money",title:"房源价格"},
+                    {field:"info",title:"周边环境"},
+                    {field:"type",title:"房源类型"},
+                    {field:"size",title:"房源面积"},
+                    {field:"floor",title:"房源楼层"},
+                    {field:"orientation",title:"房源方向"},
+                    {field:"host",title:"房东"},
+                    {field:"train",title:"附近地铁"},
+                    {field:"photo",title:"房东电话"},
+                    {field:"status",title:"房源状态",formatter:function(value,row,index){
+                            if(value=="0"){
+                                return "审核通过";
+                            }
+
+                            if(value=="1"){
+                                return "审核未通过";
+                            }
+                        }},
+                ]
+            ],
+            pagination:true,
+            pageList:[2,4,6,8],
+            pageSize:2,
+            pageNumber:1,
+            fit:true,
+            toolbar:"#tools"
+        })
+    }
+
+</script>
+</html>

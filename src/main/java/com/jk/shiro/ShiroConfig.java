@@ -43,6 +43,12 @@ public class ShiroConfig {
         map.put("/logout", "logout");//注销
         map.put("/page/toLogin", "anon");
         map.put("/book/login", "anon");
+        map.put("/yzy/yddHousList", "anon");
+        map.put("/yzy/delLogMany", "anon");
+        map.put("/yzy/findDeptList", "anon");
+        map.put("/yzy/addHous", "anon");
+        map.put("/yzy/queryTown", "anon");
+        map.put("/yzy/queryComm", "anon");
         //放开静态资源
         map.put("/js/**", "anon");
         map.put("/css/**", "anon");
