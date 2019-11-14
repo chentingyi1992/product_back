@@ -1,5 +1,6 @@
 package com.jk.service;
 
+import com.jk.model.CommBean;
 import com.jk.model.RoleBean;
 import com.jk.model.TreeBean;
 import com.jk.model.UserBean;
@@ -7,6 +8,7 @@ import com.jk.model.UserBean;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author：wdd
@@ -129,4 +131,10 @@ public interface UserService {
     void saveRoles(RoleBean roleBean);
 
     void deteleById(Integer id);
+
+    HashMap<String, Object> XiaoQuTable(Integer page, Integer rows);
+
+    void deteleByIds(Integer id);
+
+    void saveComm(CommBean commBean);
 }

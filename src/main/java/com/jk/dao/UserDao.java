@@ -1,5 +1,6 @@
 package com.jk.dao;
 
+import com.jk.model.CommBean;
 import com.jk.model.RoleBean;
 import com.jk.model.TreeBean;
 import com.jk.model.UserBean;
@@ -241,4 +242,13 @@ public interface UserDao {
     void saveRoles(RoleBean roleBean);
     @Delete("delete  from t_role  where rolesId =#{value}")
     void deteleById(Integer id);
+    @Select("select count(*) from t_community")
+    int queryCounts();
+    @Select("select * from t_community  where stastu =1  limit #{start},#{rows}")
+    List<CommBean> queryUserPages(@Param("start") int start, @Param("rows")Integer rows );
+    @Delete("delete  from t_community  where commId =#{value}")
+    void deteleByIds(Integer id);
+
+    @Insert("INSERT INTO t_community(commName,townCommName,huanjing,fujin,sheshi,stastu) values(#{commName},#{townCommName},#{huanjing},#{fujin},#{sheshi},#{stastu},)")
+    void saveComm(CommBean commBean);
 }

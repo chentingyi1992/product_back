@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 引入easyui的css样式 -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/themes/default/easyui.css">
+    <!-- 引入easyui的图标css样式 -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/themes/icon.css">
+    <!-- 引入jqury的js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.min.js"></script>
+    <!-- 引入easyui的js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.easyui.min.js"></script>
+    <!-- 引入easyui的中文js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
+</head>
+
+
+<body>
+
+<div id="tools">
+
+    <a href="javascript:openAdd()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增小区</a>
+</div>
+<!-- 新增员工-->
+<div id="saveYuangong" class="easyui-dialog" data-options="title:'新增小区',closed:true,width:300,height:200,modal:true,buttons:'#buttonss'">
+    小区名称：<input class="easyui-textbox" id="commName"><br>
+    小区地址:<input class="easyui-textbox" id="townCommName"><br>
+
+</div>
+<!-- 定义对话框的按钮 -->
+<div id="buttonss">
+    <a href="javascript:savComm()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+    <a href="javascript:closeDialogss()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">取消</a>
+</div>
+<table id="commTable"></table>
+</body>
+<script type="text/javascript">
+    $(function(){
+        queryTable();//初始化角色列表
+
+    })
+
+    //初始化权限树的数据
+    function queryTable(){
+        $("#commTable").datagrid({
+            url:"../user/queryXiaoQu",
+            columns:[
+                [{field:"checkbox",checkbox:true},
+
+                    {field:"commName",title:"小区名称"},
+                    {field:"townCommName",title:"小区地址"},
+                    {field:"huanjing",title:"空气质量"},
+                    {field:"fujin",title:"附近学校"},
+                    {field:"sheshi",title:"锻炼场所"},
+                    {field:"stastu",title:"审核状态",formatter:function(value,row,index){
+                           if(value==1){
+                               return "审核成功";
+                           }
+                            if(value==2){
+                                return "审核失败";
+                            }
+                        }},
+                    {field:"tool",title:"操作",formatter:function(value,row,index){
+                            var str = "<a href='javascript:deteleById("+row.commId+")'>删除</a>";
+                            return str;
+                        }}
+                ]
+            ],
+            pagination:true,
+            pageList:[2,4,6,8],
+            pageSize:4,
+            pageNumber:1,
+            fit:true,
+            toolbar:"#tools"
+        })
+    }
+    deteleById =function(id){
+        $.messager.confirm('确认对话框', '你确定删除吗？', function(r){
+            if (r){
+                $.ajax({
+                    url:"../user/deteleByIds",
+                    data:{id:id},
+                    success:function(){
+                        $("#commTable").datagrid("reload")
+                    }
+                })
+            }
+        });
+
+    }
+    openAdd=function(){
+        $("#saveYuangong").dialog("open")
+
+    }
+
+    closeDialogss=function(){
+        $("#saveYuangong").dialog("close")
+
+    }
+    savComm=function(){
+
+        var commName = $("#commName").textbox("getValue");
+        var townCommName = $("#townCommName").textbox("getValue");
+
+
+        $.ajax({
+            url:"../user/saveComm",
+            type:"post",
+            data:{commName:commName,townCommName:townCommName},
+            success:function(){
+                //关闭弹框
+                closeDialogss();
+                //重新加载树
+                $('#commTable').tree("reload");
+            }
+        })
+    }
+</script>
+</html>

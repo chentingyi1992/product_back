@@ -1,6 +1,7 @@
 package com.jk.controller.cty;
 
 
+import com.jk.model.CommBean;
 import com.jk.model.RoleBean;
 import com.jk.model.TreeBean;
 import com.jk.model.UserBean;
@@ -28,10 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * author：wdd
@@ -348,5 +346,25 @@ public class UserController {
     @ResponseBody
     public void deteleById(Integer id){
         userService.deteleById(id);
+    }
+
+    @RequestMapping("queryXiaoQu")
+    @ResponseBody
+    public HashMap<String, Object> queryXiaoQu(Integer page, Integer rows){
+       return userService.XiaoQuTable(page,rows);
+    }
+
+
+    @RequestMapping("deteleByIds")
+    @ResponseBody
+    public void deteleByIds(Integer id){
+        userService.deteleByIds(id);
+    }
+
+    @RequestMapping("saveComm")
+    @ResponseBody
+    public void saveComm(CommBean commBean){
+        commBean.setStastu(2);
+        userService.saveComm(commBean);
     }
 }
