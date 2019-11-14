@@ -27,5 +27,5 @@ public interface BookService {
 
     List<CommBean> queryComm(Integer id);
 
-    HousBean queryImgById(Integer id);
+    HousBean queryImgById(String id);
 }

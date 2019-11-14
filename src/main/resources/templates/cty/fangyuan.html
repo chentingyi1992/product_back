@@ -125,12 +125,25 @@
         </table>
     </form>
 </div>
-<div id="imgDialog" class="easyui-dialog" data-options="closed:true,width:850,height:500,modal:true,buttons:'#buttons1'">
+<div id="imgDialog" class="easyui-dialog" data-options="closed:true,width:1300,height:600,modal:true,buttons:'#buttons1'">
     <div style="width:350px;height:400px;float:left">
         <span id="img1"></span>
     </div>
-    <div style="width:350px;height:400px;float:right">
+    <div style="width:350px;height:400px;float:left;margin-left: 80px">
         <span id="img2"></span>
+    </div>
+    <div style="width:350px;height:400px;float:left;margin-left: 80px">
+        <span id="img3"></span>
+    </div>
+    <div style="clear:both">
+    <div style="width:350px;height:400px;float:left">
+        <span id="img4"></span>
+    </div>
+    <div style="width:350px;height:400px;float:left;margin-left: 80px">
+        <span id="img5"></span>
+    </div>
+    <div style="width:350px;height:400px;float:left;margin-left: 80px">
+        <span id="img6"></span>
     </div>
 </div>
 <div id="buttons">
@@ -202,16 +215,23 @@
             closed:false,
             title:'房源详情'
         });
-
+        //alert(id)
         $.ajax({
             url:"../yzy/queryImgById",
             type:"post",
             data:{id:id},
             success:function(data){
                 var img = data.img;
-                var arr = img.split(",");
-                $("#img1").html("<img src='"+arr[0]+"'>")
-                $("#img2").html("<img src='"+arr[1]+"'>")
+
+               if(img!=null && img!=""){
+                   var arr = img.split(",");
+                   var flag = 1;
+                   for (var i = 0; i <arr.length ; i++) {
+                        $("#img"+flag).html("<img src='"+arr[i]+"'>")
+                       flag++;
+                   }
+
+               }
             }
         })
     }
