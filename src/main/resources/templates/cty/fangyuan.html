@@ -125,12 +125,12 @@
         </table>
     </form>
 </div>
-<div id="imgDialog" class="easyui-dialog" data-options="closed:true,width:800,height:600,modal:true,buttons:'#buttons1'">
-    <div style="width:350px;height:400px;float:left;background-color:black">
-
+<div id="imgDialog" class="easyui-dialog" data-options="closed:true,width:850,height:500,modal:true,buttons:'#buttons1'">
+    <div style="width:350px;height:400px;float:left">
+        <span id="img1"></span>
     </div>
-    <div style="width:350px;height:400px;float:right;background-color:blue">
-
+    <div style="width:350px;height:400px;float:right">
+        <span id="img2"></span>
     </div>
 </div>
 <div id="buttons">
@@ -196,6 +196,13 @@
 
     //打开图片弹框
     function openImg(id){
+        $("#img1").text("");
+        $("#img2").text("");
+        $("#imgDialog").dialog({
+            closed:false,
+            title:'房源详情'
+        });
+
         $.ajax({
             url:"../yzy/queryImgById",
             type:"post",
@@ -203,14 +210,10 @@
             success:function(data){
                 var img = data.img;
                 var arr = img.split(",");
-                alert(arr[0])
+                $("#img1").html("<img src='"+arr[0]+"'>")
+                $("#img2").html("<img src='"+arr[1]+"'>")
             }
         })
-
-        $("#imgDialog").dialog({
-            closed:false,
-            title:'房源详情'
-        });
     }
 
 

@@ -20,7 +20,7 @@ public interface BookDao {
 
 
 
-    @Select("select * from tt_user where userName=#{value}")
+    @Select("select * from t_user where userName=#{value}")
     UserBean findUserByName(String username);
 
     @Select("select * from t_area")
