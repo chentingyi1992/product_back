@@ -146,6 +146,8 @@ public class BookServiceImpl implements BookService {
         return bookDao.queryTown(areaBean.getId());
     }
 
+
+
     @Override
     public List<CommBean> queryComm(String townName) {
         String keyTown="k3";
