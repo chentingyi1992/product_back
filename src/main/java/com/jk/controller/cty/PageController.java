@@ -31,9 +31,9 @@ public class PageController {
 
 
     @RequestMapping("fangyuan")
-    public String fangyuan() {
+    public String fangyuan(){
         return "cty/fangyuan";
-    }
+}
         @RequestMapping("toyonghu")
         public String toyonghu(){
             return "cty/toyonghu";
