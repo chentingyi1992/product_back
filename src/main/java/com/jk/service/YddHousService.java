@@ -1,7 +1,10 @@
 package com.jk.service;
 
+import com.jk.model.AreaBean;
+import com.jk.model.HeTongBean;
 import com.jk.model.HousBean;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,4 +25,11 @@ public interface YddHousService {
 
     void shenhe(String id);
 
+    Map<String, Object> yddHetongList(Integer page, Integer rows, HeTongBean hetong);
+
+    void addhetong(HeTongBean hetong);
+
+    List<AreaBean> findDeptList();
+
+    void del(Integer id);
 }
