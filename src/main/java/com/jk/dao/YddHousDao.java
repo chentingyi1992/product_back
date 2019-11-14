@@ -17,19 +17,4 @@ import java.util.List;
 @Mapper
 public interface YddHousDao {
 
-    /**
-     * 查询总条数
-     * @param hous
-     * @return
-     */
-    int queryCount(@Param("hous") HousBean hous);
-
-    /**
-     * 查询房源
-     * @param start
-     * @param rows
-     * @param hous
-     * @return
-     */
-    List<HousBean> yddHousList(@Param("start") int start,@Param("rows") Integer rows,@Param("hous") HousBean hous);
 }

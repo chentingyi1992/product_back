@@ -280,7 +280,7 @@ function initRoleTable(){
 }
 deteleById=function(id){
 
-	$.messager.confirm('确认对话框', '您想要退出该系统吗？', function(r){
+	$.messager.confirm('确认对话框', '你确定删除吗？', function(r){
 		if (r){
 			$.ajax({
 				url:"../user/deteleById",

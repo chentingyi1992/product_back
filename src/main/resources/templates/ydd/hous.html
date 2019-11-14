@@ -28,10 +28,10 @@
             columns:[
                 [{field:"checkbox",checkbox:true},
                     {field:"id",title:"房源id"},
-                    {field:"homeid",title:"房源编号"},
+                    {field:"homeId",title:"房源编号"},
                     {field:"title",title:"房源标题"},
                     {field:'xx',formatter:function(value,row,index){
-                            return row.area+"-"+row.region+"-"+row.community+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+row.address;
+                            return row.area+"-"+row.region+"-"+row.community+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                         },title:'地址'},
                     {field:"money",title:"房源价格"},
                     {field:"info",title:"周边环境"},
@@ -43,27 +43,63 @@
                     {field:"train",title:"附近地铁"},
                     {field:"photo",title:"房东电话"},
                     {field:"status",title:"房源状态",formatter:function(value,row,index){
-                        if(row=="0"){
+                        if(value=="0"){
                             return "审核通过";
                         }
-
-                        if(row=="1"){
-                            return "审核未通过";
+                        if(value=="1"){
+                            return "审核中";
                         }
+                        if(value=="2"){
+                                return "已驳回";
+                            }
+
                         }},
                     {field:"tool",title:"操作",formatter:function(value,row,index){
-                            var str = "";
-                            str += "<a href='javascript:openUpdate("+row.id+")'>审核</a>";
-                            return str;
-                        }}
+                        var str="";
+                        if(row.status=="1"){
+                            return str += "<a href='javascript:shenhe("+row.id+")'>审核</a>";
+                        }
+
+                        if(row.status=="2"){
+                            return str += "<a href='javascript:bohui("+row.id+")'>重新审核</a>";
+                        }
+
+                        if(row.status=="0"){
+                            return "审核已通过";
+                        }
+
+                    }}
                 ]
             ],
             pagination:true,
             pageList:[2,4,6,8],
-            pageSize:2,
+            pageSize:4,
             pageNumber:1,
             fit:true,
-            toolbar:"#tools"
+        })
+    }
+
+    //审核
+    function bohui(id){
+        $.ajax({
+            url:"../ydd/shenhe",
+            type:"post",
+            data:{id:id},
+            success:function(data){
+                $("#housTable").datagrid("load");
+            }
+        })
+    }
+
+    //审核
+    function shenhe(id){
+        $.ajax({
+            url:"../ydd/shenhe",
+            type:"post",
+            data:{id:id},
+            success:function(data){
+                $("#housTable").datagrid("load");
+            }
         })
     }
 

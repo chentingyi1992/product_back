@@ -1,7 +1,10 @@
 package com.jk.model;
 
-import org.springframework.data.annotation.Id;
+
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+
 
 /**
  * author:yangdd
@@ -12,10 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "t_housing")
 public class HousBean {
 
-    @Id
-    private Integer id;
+    private String id;
 
-    private String homeid;
+    private String homeId;
 
     private String title;
 
@@ -37,7 +39,7 @@ public class HousBean {
 
     private String orientation;
 
-    private Integer host;
+    private String host;
 
     private String train;
 
@@ -45,20 +47,43 @@ public class HousBean {
 
     private Integer status;
 
-    public Integer getId() {
+
+    @Transient
+    private Integer maxmoney;
+
+    @Transient
+    private Integer minmoney;
+
+    public Integer getMaxmoney() {
+        return maxmoney;
+    }
+
+    public void setMaxmoney(Integer maxmoney) {
+        this.maxmoney = maxmoney;
+    }
+
+    public Integer getMinmoney() {
+        return minmoney;
+    }
+
+    public void setMinmoney(Integer minmoney) {
+        this.minmoney = minmoney;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getHomeid() {
-        return homeid;
+    public String getHomeId() {
+        return homeId;
     }
 
-    public void setHomeid(String homeid) {
-        this.homeid = homeid;
+    public void setHomeId(String homeId) {
+        this.homeId = homeId;
     }
 
     public String getTitle() {
@@ -141,11 +166,11 @@ public class HousBean {
         this.orientation = orientation;
     }
 
-    public Integer getHost() {
+    public String getHost() {
         return host;
     }
 
-    public void setHost(Integer host) {
+    public void setHost(String host) {
         this.host = host;
     }
 

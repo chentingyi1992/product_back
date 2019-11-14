@@ -2,15 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jk.dao.YddHousDao">
 
-    <!--查询总条数-->
-    <select id="queryCount" resultType="int">
-        select count(1) from t_housing  h
-    </select>
-
-    <!--房源查询-->
-    <select id="yddHousList" resultType="com.jk.model.HousBean">
-        select * from t_housing h where h.status=0 limit #{start} , #{rows}
-    </select>
 
 
 </mapper>
