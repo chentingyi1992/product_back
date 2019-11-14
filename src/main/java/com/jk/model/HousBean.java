@@ -47,6 +47,7 @@ public class HousBean {
 
     private Integer status;
 
+
     @Transient
     private Integer maxmoney;
 
