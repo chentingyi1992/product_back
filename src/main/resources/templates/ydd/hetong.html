@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入easyui的css样式 -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/themes/default/easyui.css">
+    <!-- 引入easyui的图标css样式 -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/themes/icon.css">
+    <!-- 引入jqury的js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.min.js"></script>
+    <!-- 引入easyui的js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.easyui.min.js"></script>
+    <!-- 引入easyui的中文js文件 -->
+    <script type="text/javascript" src="../js/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
+    <!-- BootStrap 必备-->
+    <script src="../js/jquery-easyui-1.5/js/bootstrap3/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/js/bootstrap3/css/bootstrap.css">
+    <!-- 引入文件上传fileinput的css、js -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/js/bootstrap-fileinput/css/fileinput.css">
+    <script src="../js/jquery-easyui-1.5/js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/jquery-easyui-1.5/js/bootstrap-fileinput/js/locales/zh.js"></script>
+</head>
+<body>
+<div id="tools">
+    房主姓名:<input class="easyui-textbox" id="yuanname">
+    房客姓名:<input class="easyui-textbox" id="fangname">
+    小区:<input class="easyui-textbox" id="communitys">
+    <a  href="javascript:searchUser()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
+    <a  href="javascript:openAdd()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+</div>
+<div id="hetongTable"></div>
+
+<!-- 定义新增的div -->
+<div id="hetongDialog" class="easyui-dialog" data-options="closed:true,width:500,height:400,modal:true,buttons:'#buttons'">
+    <form id="hetongForm" method="post">
+        <input name="id" style="display:none">
+        <table>
+            <tr>
+                <td>房主姓名</td>
+                <td><input class="easyui-textbox" name="yuanname"></td>
+            </tr>
+            <tr>
+                <td>房客姓名</td>
+                <td><input class="easyui-textbox" name="fangname"></td>
+            </tr>
+            <tr>
+                <td>房主电话</td>
+                <td><input class="easyui-textbox" name="yuanphone"></td>
+            </tr>
+            <tr>
+                <td>房客电话</td>
+                <td><input class="easyui-textbox" name="fangphone"></td>
+            </tr>
+            <tr>
+                <td>小区</td>
+                <td><input id="community" name="community" class="easyui-combobox"></td>
+            </tr>
+            <tr>
+                <td>图片</td>
+                <td>
+                    <input type="hidden" id="testimg" name="img" />
+                    <input type="file" multiple class="projectfile" accept="image/*" name="file" id="fileimg">
+                </td>
+            </tr>
+            <tr>
+                <td>签署日期</td>
+                <td><input class="easyui-datebox" name="date"></td>
+            </tr>
+            <tr>
+                <td>开始日期</td>
+                <td><input class="easyui-datebox" name="staredate"></td>
+            </tr>
+            <tr>
+                <td>结束日期</td>
+                <td><input class="easyui-datebox" name="enddate"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- 定义对话框的按钮 -->
+<div id="buttons">
+    <a href="javascript:saveHetong()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+    <a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">取消</a>
+</div>
+</body>
+<script>
+    $(function(){
+        initHetongTable();//初始化用户表格
+        initFile();
+    })
+
+    //新增
+    function saveHetong(){
+        $("#hetongForm").form("submit",{
+            url:"../ydd/addhetong",
+            success:function(){
+                //关闭弹框
+                closeDialog();
+                //刷新表格
+                searchUser();
+            }
+        });
+    }
+
+    //打开新增弹框
+    function openAdd(){
+        //清除表单缓存
+        $("#hetongForm").form("reset");
+        $("#hetongDialog").dialog({
+            closed:false,
+            title:'新增合同'
+        });
+        initFormDeptSelect()
+    }
+
+     function initFormDeptSelect() {
+         $("#community").combobox({
+             url: "../ydd/findDeptList",
+             valueField: "id",
+             textField: "name"
+         })
+     }
+
+    //关闭新增弹框
+    function closeDialog(){
+        $("#hetongDialog").dialog("close");
+    }
+
+    function searchUser(){
+        $("#hetongTable").datagrid("load",{
+            yuanname:$("#yuanname").textbox("getValue"),
+            fangname:$("#fangname").textbox("getValue"),
+            community:$("#communitys").textbox("getValue")
+        });
+    }
+
+    function initHetongTable() {
+        $("#hetongTable").datagrid({
+            url: "../ydd/yddHetongList",
+            columns: [
+                [{field: "checkbox", checkbox: true},
+                    {field: "id", title: "房源id"},
+                    {field: "yuanname", title: "房主姓名"},
+                    {field: "fangname", title: "房客姓名"},
+                    {field: "yuanphone", title: "房主电话"},
+                    {field: "fangphone", title: "房客电话"},
+                    {field: "community", title: "小区"},
+                    {field: "img", title: "图片",formatter:function(value,row,index){
+                            return "<img src='"+value+"' width='50px' height='50px'>";
+                        }},
+                    {field: "date", title: "签署日期"},
+                    {field: "staredate", title: "开始日期"},
+                    {field: "enddate", title: "结束日期"},
+                    {field: "xxxx", title: "操作",formatter:function(value,row,index){
+                        return "<a href='javascript:del("+row.id+")'>删除</a>";
+                        }}
+                ]
+            ],
+            pagination: true,
+            pageList: [2, 4, 6, 8],
+            pageSize: 4,
+            pageNumber: 1,
+            fit: true,
+            toolbar: "#tools"
+        })
+    }
+
+    //删除
+    function del(id){
+        $.ajax({
+            url:"../ydd/del",
+            data:{id:id},
+            type:"post",
+            success:function(){
+                searchUser();
+            }
+        })
+    }
+
+    function initFile(){
+        $("#fileimg").fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: '../yzy/uploadimg', //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileCount: 6, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount:true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        }).on('fileuploaded', function(event, data, previewId, index) {
+            // $('#testimg').val(data.response);
+            //alert($('#testimg').val())
+            var imgval = $('#testimg').val();
+            // var imgval = "";
+            if(imgval == null || imgval == "" || imgval == undefined){
+                imgval = data.response;
+            }else{
+                imgval += ","+data.response;
+            }
+            //alert(imgval)
+            $('#testimg').val(imgval);
+        });
+    }
+</script>
+</html>
