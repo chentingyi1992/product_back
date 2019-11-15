@@ -132,9 +132,11 @@ public interface UserService {
 
     void deteleById(Integer id);
 
-    HashMap<String, Object> XiaoQuTable(Integer page, Integer rows);
+    HashMap<String, Object> XiaoQuTable(Integer integer, Integer page, Integer rows);
 
     void deteleByIds(Integer id);
 
     void saveComm(CommBean commBean);
+
+    void updateById(Integer id);
 }

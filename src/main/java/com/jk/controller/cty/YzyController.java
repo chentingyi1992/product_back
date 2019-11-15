@@ -57,8 +57,8 @@ public class YzyController {
 
     @RequestMapping("queryComm")
     @ResponseBody
-    public List<CommBean> queryComm(String townName){
-        return bookService.queryComm(townName);
+    public List<CommBean> queryComm(String townName,String name){
+        return bookService.queryComm(townName,name);
     }
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());

@@ -34,4 +34,8 @@ public interface BookDao {
 
     @Select("select * from t_community t where t.townId = #{id}")
     List<CommBean> queryComm(Integer id);
+    @Select("select * from t_town")
+    List<TownBean> queryList();
+    @Select("select * from t_community")
+    List<CommBean> queryCom();
 }

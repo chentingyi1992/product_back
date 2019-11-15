@@ -23,9 +23,9 @@ public interface BookService {
 
     List<AreaBean> findDeptList();
 
-    List<TownBean> queryTown(String id);
+    List<TownBean> queryTown(String name);
 
-    List<CommBean> queryComm(Integer id);
+    List<CommBean> queryComm(String id,String name);
 
-    HousBean queryImgById(Integer id);
+    HousBean queryImgById(String id);
 }

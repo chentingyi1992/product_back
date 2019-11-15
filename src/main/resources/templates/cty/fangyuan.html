@@ -41,26 +41,17 @@
 
 <div id="housTable"></div>
 
-<div id="userDialog" class="easyui-dialog" data-options="closed:true,width:500,height:400,modal:true,buttons:'#buttons'">
+<div id="userDialog" class="easyui-dialog" data-options="closed:true,width:900,height:600,modal:true,buttons:'#buttons'">
     <form id="userForm" method="post">
         <table>
-
-
-
-
-
-
-
             <tr>
                 <td>房源标题</td>
                 <td><input class="easyui-textbox" name="id" type="hidden">
                     <input class="easyui-textbox" name="title"></td>
+
+
             </tr>
             <tr>
-                <td>
-                    <input type="hidden" name="id">
-                    <input class="easyui-textbox" name="title"></td>
-
                 <td>区</td>
                 <td>
                     <input id="area" name="area" class="easyui-combobox">
@@ -72,7 +63,8 @@
                 <td>
                     <input id="region" name="region" class="easyui-combobox">
                 </td>
-
+            </tr>
+            <tr>
                 <td>小区</td>
                 <td>
                     <input id="community" name="community" class="easyui-combobox">
@@ -82,7 +74,8 @@
             <tr>
                 <td>房源价格</td>
                 <td><input class="easyui-textbox" name="money"></td>
-
+            </tr>
+            <tr>
                 <td>周边环境</td>
                 <td><input class="easyui-textbox" name="info"></td>
             </tr>
@@ -220,18 +213,24 @@
 
 
     function initFormDeptSelect(){
+
         $("#area").combobox({
             url:"../yzy/findDeptList",
-            valueField:"id",
+            valueField:"name",
             textField:"name",
             onChange:function(newValue,oldValue){
+                $("#community").combobox("reset")
+
+
                 $("#region").combobox({
-                    url:"../yzy/queryTown?id="+newValue,
-                    valueField:"townId",
+
+                    url:"../yzy/queryTown?name="+newValue,
+                    valueField:"townName",
                     textField:"townName",
                     onChange:function(newValue,oldValue){
+
                         $("#community").combobox({
-                            url:"../yzy/queryComm?id="+newValue,
+                            url:"../yzy/queryComm?townName="+newValue+"&name="+$("#area").combobox("getValue"),
                             valueField:"commId",
                             textField:"commName",
                         })
@@ -241,6 +240,7 @@
         })
 
     }
+
 
     //关闭弹框
     function closeDialog(){
