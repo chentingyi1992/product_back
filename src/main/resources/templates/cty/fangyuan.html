@@ -45,12 +45,22 @@
     <form id="userForm" method="post">
         <table>
 
+
+
+
+
+
+
             <tr>
                 <td>房源标题</td>
                 <td><input class="easyui-textbox" name="id" type="hidden">
                     <input class="easyui-textbox" name="title"></td>
             </tr>
             <tr>
+                <td>
+                    <input type="hidden" name="id">
+                    <input class="easyui-textbox" name="title"></td>
+
                 <td>区</td>
                 <td>
                     <input id="area" name="area" class="easyui-combobox">
@@ -62,21 +72,22 @@
                 <td>
                     <input id="region" name="region" class="easyui-combobox">
                 </td>
-            </tr>
-            <tr>
+
                 <td>小区</td>
                 <td>
                     <input id="community" name="community" class="easyui-combobox">
                 </td>
             </tr>
+
             <tr>
                 <td>房源价格</td>
                 <td><input class="easyui-textbox" name="money"></td>
-            </tr>
-            <tr>
+
                 <td>周边环境</td>
                 <td><input class="easyui-textbox" name="info"></td>
             </tr>
+
+
             <tr>
                 <td>房源类型</td>
                 <td><input class="easyui-textbox" name="type"></td>
@@ -119,25 +130,12 @@
         </table>
     </form>
 </div>
-<div id="imgDialog" class="easyui-dialog" data-options="closed:true,width:1300,height:600,modal:true,buttons:'#buttons1'">
-    <div style="width:350px;height:400px;float:left">
-        <span id="img1"></span>
+<div id="imgDialog" class="easyui-dialog" data-options="closed:true,width:800,height:600,modal:true,buttons:'#buttons1'">
+    <div style="width:350px;height:400px;float:left;background-color:black">
+
     </div>
-    <div style="width:350px;height:400px;float:left;margin-left: 80px">
-        <span id="img2"></span>
-    </div>
-    <div style="width:350px;height:400px;float:left;margin-left: 80px">
-        <span id="img3"></span>
-    </div>
-    <div style="clear:both">
-    <div style="width:350px;height:400px;float:left">
-        <span id="img4"></span>
-    </div>
-    <div style="width:350px;height:400px;float:left;margin-left: 80px">
-        <span id="img5"></span>
-    </div>
-    <div style="width:350px;height:400px;float:left;margin-left: 80px">
-        <span id="img6"></span>
+    <div style="width:350px;height:400px;float:right;background-color:blue">
+
     </div>
 </div>
 <div id="buttons">
@@ -203,48 +201,38 @@
 
     //打开图片弹框
     function openImg(id){
-        $("#img1").text("");
-        $("#img2").text("");
-        $("#imgDialog").dialog({
-            closed:false,
-            title:'房源详情'
-        });
-        //alert(id)
         $.ajax({
             url:"../yzy/queryImgById",
             type:"post",
             data:{id:id},
             success:function(data){
                 var img = data.img;
-
-               if(img!=null && img!=""){
-                   var arr = img.split(",");
-                   var flag = 1;
-                   for (var i = 0; i <arr.length ; i++) {
-                        $("#img"+flag).html("<img src='"+arr[i]+"'>")
-                       flag++;
-                   }
-
-               }
+                var arr = img.split(",");
+                alert(arr[0])
             }
         })
+
+        $("#imgDialog").dialog({
+            closed:false,
+            title:'房源详情'
+        });
     }
 
 
     function initFormDeptSelect(){
         $("#area").combobox({
             url:"../yzy/findDeptList",
-            valueField:"name",
+            valueField:"id",
             textField:"name",
             onChange:function(newValue,oldValue){
                 $("#region").combobox({
-                    url:"../yzy/queryTown?name="+newValue,
-                    valueField:"townName",
+                    url:"../yzy/queryTown?id="+newValue,
+                    valueField:"townId",
                     textField:"townName",
                     onChange:function(newValue,oldValue){
                         $("#community").combobox({
                             url:"../yzy/queryComm?id="+newValue,
-                            valueField:"commName",
+                            valueField:"commId",
                             textField:"commName",
                         })
                     }

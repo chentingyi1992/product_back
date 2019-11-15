@@ -23,7 +23,7 @@ public interface BookService {
 
     List<AreaBean> findDeptList();
 
-    List<TownBean> queryTown(Integer id);
+    List<TownBean> queryTown(String id);
 
     List<CommBean> queryComm(Integer id);
 

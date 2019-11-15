@@ -9,7 +9,10 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
 
-    url: jdbc:mysql://192.168.1.30:3306/product_qiyue
+    url: jdbc:mysql://192.168.1.3:3306/product_qiyue
+
+    username: root
+    password: 213316
   redis:
     database: 0
     jedis:
@@ -23,10 +26,9 @@ spring:
       nodes: 192.168.252.128:7000,192.168.252.128:7001,192.168.252.128:7002,192.168.252.128:7003,192.168.252.128:7004,192.168.252.128:7005
   data:
     mongodb:
-      uri: mongodb://192.168.1.30:27017/product_qiyue
+      uri: mongodb://192.168.1.3:27017/product_qiyue
 
-    username: root
-    password: 213316
+
   #????dubbo????????:???????????????
 
 
