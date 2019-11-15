@@ -206,12 +206,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public HashMap<String, Object> XiaoQuTable(Integer page, Integer rows) {
+    public HashMap<String, Object> XiaoQuTable(Integer page, Integer rows,Integer max) {
         //查询总条数
-        int total = userDao.queryCounts();
+
+        int total = 0;
         int start = (page-1)*rows;
         //查询每页返回的数据 list
-        List<CommBean> list = userDao.queryUserPages(start,rows);
+        List<CommBean> list = new ArrayList<>();
+
+        if (max==1){
+                   total = userDao.queryCounts(max);
+                    list = userDao.queryUserPages(start,rows);
+
+            }else{
+                 total = userDao.queryCounts(max);
+                 list = userDao.queryUserPagess(start,rows);
+
+            }
+
 
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("total", total);
@@ -228,6 +240,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveComm(CommBean commBean) {
         userDao.saveComm(commBean);
+    }
+
+    @Override
+    public void updateById(Integer id) {
+        userDao.updateById(id);
     }
 
 }

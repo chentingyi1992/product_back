@@ -33,6 +33,7 @@ public class PageController {
     @RequestMapping("fangyuan")
     public String fangyuan() {
         return "cty/fangyuan";
+
     }
         @RequestMapping("toyonghu")
         public String toyonghu(){
@@ -61,6 +62,11 @@ public class PageController {
         @RequestMapping("tohetong")
         public String tohetong(){
             return "ydd/hetong";
+        }
+
+        @RequestMapping("toShenHe")
+        public String toShenHe(){
+            return "cty/toShenHe";
         }
 
     }
