@@ -1,5 +1,7 @@
 package com.jk.controller.cty;
 
+import com.jk.model.AreaBean;
+import com.jk.model.HeTongBean;
 import com.jk.model.HousBean;
 import com.jk.service.YddHousService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +41,57 @@ public class YddHousController {
         return yddHousService.yddHousList(page,rows,hous);
     }
 
+    /**
+     * 房源审核
+     * @param id
+     */
     @RequestMapping("shenhe")
     @ResponseBody
     public void shenhe(String id){
         yddHousService.shenhe(id);
     }
 
+    /**
+     * 查询合同
+     * @param page
+     * @param rows
+     * @param hetong
+     * @return
+     */
+    @RequestMapping("yddHetongList")
+    @ResponseBody
+    public Map<String , Object> yddHetongList(Integer page , Integer rows , HeTongBean hetong){
+        return yddHousService.yddHetongList(page,rows,hetong);
+    }
 
+    /**
+     * 新增
+     * @param hetong
+     */
+    @RequestMapping("addhetong")
+    @ResponseBody
+    public void addhetong(HeTongBean hetong){
+        yddHousService.addhetong(hetong);
+    }
 
+    /**
+     * 查询小区
+     * @return
+     */
+    @RequestMapping("findDeptList")
+    @ResponseBody
+    public List<AreaBean> findDeptList(){
+        return yddHousService.findDeptList();
+    }
+
+    /**
+     * 删除合同
+     * @param id
+     */
+    @RequestMapping("del")
+    @ResponseBody
+    public void del(Integer id){
+        yddHousService.del(id);
+    }
 
 }

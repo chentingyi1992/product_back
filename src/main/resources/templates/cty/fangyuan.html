@@ -13,6 +13,14 @@
     <script type="text/javascript" src="../js/jquery-easyui-1.5/jquery.easyui.min.js"></script>
     <!-- 引入easyui的中文js文件 -->
     <script type="text/javascript" src="../js/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
+    <!-- BootStrap 必备-->
+    <script src="../js/jquery-easyui-1.5/js/bootstrap3/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/js/bootstrap3/css/bootstrap.css">
+    <!-- 引入文件上传fileinput的css、js -->
+    <link rel="stylesheet" href="../js/jquery-easyui-1.5/js/bootstrap-fileinput/css/fileinput.css">
+    <script src="../js/jquery-easyui-1.5/js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/jquery-easyui-1.5/js/bootstrap-fileinput/js/locales/zh.js"></script>
+
 </head>
 <body>
 <div id="tools">
@@ -36,17 +44,11 @@
 <div id="userDialog" class="easyui-dialog" data-options="closed:true,width:500,height:400,modal:true,buttons:'#buttons'">
     <form id="userForm" method="post">
         <table>
-            <tr>
-                <td>id</td>
-                <td><input class="easyui-textbox" name="id"></td>
-            </tr>
-            <tr>
-                <td>房源编号</td>
-                <td><input class="easyui-textbox" name="homeId"></td>
-            </tr>
+
             <tr>
                 <td>房源标题</td>
-                <td><input class="easyui-textbox" name="title"></td>
+                <td><input class="easyui-textbox" name="id" type="hidden">
+                    <input class="easyui-textbox" name="title"></td>
             </tr>
             <tr>
                 <td>区</td>
@@ -107,16 +109,75 @@
                 <td>房源状态</td>
                 <td><input class="easyui-textbox" name="status"></td>
             </tr>
+            <tr>
+                <td>房源图片</td>
+                <td>
+                    <input type="hidden" id="testimg" name="img" />
+                    <input type="file" multiple class="projectfile" accept="image/*" name="file" id="fileimg">
+                </td>
+            </tr>
         </table>
     </form>
 </div>
-
+<div id="imgDialog" class="easyui-dialog" data-options="closed:true,width:1300,height:600,modal:true,buttons:'#buttons1'">
+    <div style="width:350px;height:400px;float:left">
+        <span id="img1"></span>
+    </div>
+    <div style="width:350px;height:400px;float:left;margin-left: 80px">
+        <span id="img2"></span>
+    </div>
+    <div style="width:350px;height:400px;float:left;margin-left: 80px">
+        <span id="img3"></span>
+    </div>
+    <div style="clear:both">
+    <div style="width:350px;height:400px;float:left">
+        <span id="img4"></span>
+    </div>
+    <div style="width:350px;height:400px;float:left;margin-left: 80px">
+        <span id="img5"></span>
+    </div>
+    <div style="width:350px;height:400px;float:left;margin-left: 80px">
+        <span id="img6"></span>
+    </div>
+</div>
 <div id="buttons">
     <a href="javascript:saveUser()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
     <a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">取消</a>
 </div>
 </body>
 <script>
+
+    $(function () {
+        initFile();
+    })
+
+    function initFile(){
+        $("#fileimg").fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: '../yzy/uploadimg', //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileCount: 6, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount:true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        }).on('fileuploaded', function(event, data, previewId, index) {
+           // $('#testimg').val(data.response);
+            //alert($('#testimg').val())
+            var imgval = $('#testimg').val();
+           // var imgval = "";
+            if(imgval == null || imgval == "" || imgval == undefined){
+            imgval = data.response;
+            }else{
+            	imgval += ","+data.response;
+            }
+            //alert(imgval)
+            $('#testimg').val(imgval);
+        });
+    }
 
     //新增
     function saveUser(){
@@ -140,21 +201,50 @@
         initFormDeptSelect();
     }
 
+    //打开图片弹框
+    function openImg(id){
+        $("#img1").text("");
+        $("#img2").text("");
+        $("#imgDialog").dialog({
+            closed:false,
+            title:'房源详情'
+        });
+        //alert(id)
+        $.ajax({
+            url:"../yzy/queryImgById",
+            type:"post",
+            data:{id:id},
+            success:function(data){
+                var img = data.img;
+
+               if(img!=null && img!=""){
+                   var arr = img.split(",");
+                   var flag = 1;
+                   for (var i = 0; i <arr.length ; i++) {
+                        $("#img"+flag).html("<img src='"+arr[i]+"'>")
+                       flag++;
+                   }
+
+               }
+            }
+        })
+    }
+
 
     function initFormDeptSelect(){
         $("#area").combobox({
             url:"../yzy/findDeptList",
-            valueField:"id",
+            valueField:"name",
             textField:"name",
             onChange:function(newValue,oldValue){
                 $("#region").combobox({
-                    url:"../yzy/queryTown?id="+newValue,
-                    valueField:"townId",
+                    url:"../yzy/queryTown?name="+newValue,
+                    valueField:"townName",
                     textField:"townName",
                     onChange:function(newValue,oldValue){
                         $("#community").combobox({
                             url:"../yzy/queryComm?id="+newValue,
-                            valueField:"commId",
+                            valueField:"commName",
                             textField:"commName",
                         })
                     }
@@ -181,6 +271,7 @@
     $(function(){
         initHousTable();//初始化用户表格
     })
+
 
     function initHousTable(){
         $("#housTable").datagrid({
@@ -211,6 +302,9 @@
                                 return "审核未通过";
                             }
                         }},
+                    {field:"tupian",title:"查看",formatter:function (value,row,index) {
+                            return "<a href='javascript:openImg("+row.id+")'>房源图片</a>";
+                        }}
                 ]
             ],
             pagination:true,

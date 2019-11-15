@@ -1,10 +1,7 @@
 package com.jk.model;
 
-
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-
 
 /**
  * author:yangdd
@@ -47,7 +44,7 @@ public class HousBean {
 
     private Integer status;
 
-
+    private String img;
     @Transient
     private Integer maxmoney;
 
@@ -68,6 +65,13 @@ public class HousBean {
 
     public void setMinmoney(Integer minmoney) {
         this.minmoney = minmoney;
+    }
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getId() {

@@ -1,6 +1,8 @@
 package com.jk.service.impl;
 
 import com.jk.dao.YddHousDao;
+import com.jk.model.AreaBean;
+import com.jk.model.HeTongBean;
 import com.jk.model.HousBean;
 import com.jk.service.YddHousService;
 import org.elasticsearch.common.recycler.Recycler;
@@ -54,6 +56,10 @@ public class YddHousServiceImpl implements YddHousService {
         return map;
     }
 
+    /**
+     * 修改审核状态
+     * @param id
+     */
     @Override
     public void shenhe(String id) {
         Query query = new Query();
@@ -61,6 +67,39 @@ public class YddHousServiceImpl implements YddHousService {
         Update update = new Update();
         update.set("status",0);
         mongoTemplate.updateFirst(query,update,"t_housing");
+    }
+
+    /**
+     * 查询合同
+     * @param page
+     * @param rows
+     * @param hetong
+     * @return
+     */
+    @Override
+    public Map<String, Object> yddHetongList(Integer page, Integer rows, HeTongBean hetong) {
+        HashMap<String, Object> map = new  HashMap<String, Object>();
+        int total = yddHousDao.queryCount(hetong);
+        int start = (page-1)*rows;
+        List<HeTongBean> list = yddHousDao.yddHetongList(start,rows,hetong);
+        map.put("total",total);
+        map.put("rows",list);
+        return map;
+    }
+
+    @Override
+    public void addhetong(HeTongBean hetong) {
+        yddHousDao.addhetong(hetong);
+    }
+
+    @Override
+    public List<AreaBean> findDeptList() {
+        return yddHousDao.findDeptList();
+    }
+
+    @Override
+    public void del(Integer id) {
+        yddHousDao.del(id);
     }
 
 

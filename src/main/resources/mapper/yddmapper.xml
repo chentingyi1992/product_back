@@ -2,6 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jk.dao.YddHousDao">
 
+  <select id="queryCount" resultType="int">
+      select count(1) from t_hetong h where 1=1
+      <include refid="hetongSql"></include>
+  </select>
 
+    <select id="yddHetongList" resultType="com.jk.model.HeTongBean">
+        select * from t_hetong h where 1=1
+        <include refid="hetongSql"></include>
+        order by h.date desc
+        limit #{start} , #{rows}
+    </select>
+
+    <sql id="hetongSql">
+        <if test="hetong.yuanname != null and hetong.yuanname != '' ">
+            and h.yuanname = #{hetong.yuanname}
+        </if>
+        <if test="hetong.fangname != null and hetong.fangname != '' ">
+            and h.fangname = #{hetong.fangname}
+        </if>
+        <if test="hetong.community != null and hetong.community != '' ">
+            and h.community = #{hetong.community}
+        </if>
+    </sql>
+
+    <insert id="addhetong" parameterType="com.jk.model.HeTongBean">
+       INSERT INTO t_hetong
+       (yuanname,img,community,date,yuanphone,fangname,fangphone,staredate,enddate)
+       value (#{yuanname},#{img},#{community},#{date},#{yuanphone},#{fangname},#{fangphone},#{staredate},#{enddate})
+    </insert>
 
 </mapper>
